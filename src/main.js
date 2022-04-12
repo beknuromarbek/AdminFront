@@ -1,31 +1,25 @@
 import Vue from 'vue';
+import store from './store'
 import App from './App.vue';
 import router from './router';
 
 import firebase from "firebase/compat/app";
+import { firebaseConfig } from "@/firebase-config";
 
 Vue.config.productionTip = false;
 
 let app = ''
 
-const firebaseConfig = {
-  apiKey: "AIzaSyD7Jw3KvXK0Oha7-v6w_R0jLXaQEtUN0Go",
-  authDomain: "diploma-c971d.firebaseapp.com",
-  databaseURL: "https://diploma-c971d-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "diploma-c971d",
-  storageBucket: "diploma-c971d.appspot.com",
-  messagingSenderId: "479957697670",
-  appId: "1:479957697670:web:816997ba6a732c011cfd07",
-  measurementId: "G-GLDRY34EP1"
-};
-
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
+
+export const db = firebase.firestore()
 
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     new Vue({
       router,
+      store,
       render: h => h(App)
     }).$mount('#app')
   }

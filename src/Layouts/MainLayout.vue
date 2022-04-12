@@ -1,8 +1,11 @@
 <template>
-<div class="main-container">
-  <Header/>
-  <router-view/>
-</div>
+  <div class="wrapper">
+    <Header/>
+    <div class="main-container">
+      <router-view/>
+    </div>
+  </div>
+
 </template>
 
 <script>

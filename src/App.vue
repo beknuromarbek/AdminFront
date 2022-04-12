@@ -14,7 +14,7 @@ export default {
   name: 'App',
   components: {
     MainLayout,
-    EmptyLayout
+    EmptyLayout,
   },
   computed: {
     layout() {
@@ -25,6 +25,6 @@ export default {
 
 </script>
 
-<style>
-@import './assets/style/main.css';
+<style lang="css">
+@import 'assets/style/main.css';
 </style>

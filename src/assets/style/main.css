@@ -6,7 +6,6 @@ body {
     margin: 0;
     padding-bottom: 0;
     box-sizing: border-box;
-    min-height: 100vh;
 }
 
 #app {
@@ -17,6 +16,9 @@ body {
     color: #2c3e50;
 }
 
+.wrapper {
+    min-height: 100vh;
+}
 /* End Default styles */
 
 
@@ -26,20 +28,25 @@ body {
     background-color: #877aff;
 
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
 }
 
-#nav a {
+.nav-links a {
     font-weight: bold;
     color: #2c3e50;
 
     margin: 0 15px;
 }
 
-#nav a.router-link-exact-active {
+.nav-links a.router-link-exact-active {
     color: #42b983;
 }
+
+.nav-links a.router-link-active {
+    color: #42b983;
+}
+
 
 /* End Nav styles*/
 
@@ -48,8 +55,40 @@ body {
 
 .main-container {
     margin: 0 auto;
+    padding: 0 15px;
+    max-width: 1240px;
 }
 
+.main-links {
+    position: absolute;
+    top: 20%;
+    left: 0;
+    height: 200px;
+    padding: 20px 30px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+}
+
+.main-links a {
+    font-size: 20px;
+    text-decoration: none;
+    color: #174ea6;
+
+    border-bottom: #2c3e50 2px solid;
+}
+
+
+.main-links a.router-link-exact-active {
+    color: #4285f4;
+}
+
+.block-content {
+  display: flex;
+  justify-content: center;
+}
 /* End Main page styles */
 
 
@@ -165,7 +204,7 @@ body {
    font-weight: 500;
    height: 48px;
    justify-content: center;
-   letter-spacing: .25px;
+   letter-spacing: 0.25px;
    line-height: normal;
    max-width: 100%;
    overflow: visible;
