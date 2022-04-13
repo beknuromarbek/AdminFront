@@ -30,19 +30,7 @@ export const service_mixin = {
 			}
 
 			this.have_access = true
-			// this.check_permission_by_type_id(type_id)
 
-			// if (!this.have_access) {
-			// 	await this.$router.push({ name: 'ServiceInformation'})
-			// }
-		},
-		check_permission_by_type_id(type_id) {
-			for (let service of this.GET_SERVICES) {
-				if (service.type_id === type_id) {
-					this.have_access = true
-					break;
-				}
-			}
 		},
 	},
 }

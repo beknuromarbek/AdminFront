@@ -2,7 +2,6 @@
 <div>
   <div
       class="form"
-      v-if="GET_SERVICES.length"
   >
     <h1>Add Service</h1>
     <span v-if="error">{{}}</span>
@@ -10,13 +9,13 @@
       <input
           type="text"
           name="type"
-          :value="type_name"
+          v-model="type_name"
           disabled
       >
       <input
           type="text"
           name="subtype"
-          :value="subtype_name"
+          v-model="subtype_name"
           disabled
       >
       <input
@@ -41,7 +40,7 @@
       <button type="submit">Save</button>
     </form>
   </div>
-  <Spinner v-else/>
+<!--  <Spinner v-else/>-->
 </div>
 </template>
 
@@ -49,6 +48,7 @@
 import {mapActions, mapGetters} from 'vuex'
 
 import Spinner from '@/components/Spinner'
+import firebase from "firebase/compat";
 
 export default {
   name: "AddService",
@@ -73,11 +73,14 @@ export default {
   },
   computed: {
     ...mapGetters([
-        'GET_SERVICES'
+        'GET_SERVICES',
+        'GET_USER',
     ]),
   },
   methods: {
     ...mapActions([
+        'GET_FIRESTORE_INFORMATION_OF_AUTH_USER',
+        'GET_SERVICES_FROM_FIRESTORE',
         'ADD_SERVICE'
     ]),
     save_service() {
@@ -90,17 +93,34 @@ export default {
             this.error = err
           })
     },
-    stay_or_push_to_home() {
-      if (!this.GET_SERVICES.length) {
-        this.$router.push({ name: "Home"})
-      } else {
-        this.form.branch_id = this.GET_SERVICES[0].branch_id
-            this.form.subtype_id = this.type_with_subtype.subtype
-        this.form.type_id = this.type_with_subtype.type
+    async stay_or_push_to_home() {
 
-        this.type_name = this.type_of_service[this.form.type_id]
-        this.subtype_name = this.subtype_of_service[this.form.type_id][this.form.subtype_id]
+      if (!this.type_with_subtype) {
+        await this.$router.push({name: 'Home'})
+        return
       }
+
+      if (this.GET_SERVICES.length === 0) {
+        try {
+          const user = firebase.auth().currentUser
+          await this.GET_FIRESTORE_INFORMATION_OF_AUTH_USER(user)
+        } catch (err) {
+          console.error(err)
+        }
+      }
+
+      this.filling_form_type_and_subtype()
+
+      console.log('are you her ')
+    },
+    filling_form_type_and_subtype() {
+      this.form.branch_id = this.GET_USER.branch_id
+      this.form.subtype_id = this.type_with_subtype.subtype
+      this.form.type_id = this.type_with_subtype.type
+
+      this.type_name = this.type_of_service[this.form.type_id]
+      this.subtype_name = this.subtype_of_service[this.form.type_id][this.form.subtype_id]
+
     }
   },
   mounted() {

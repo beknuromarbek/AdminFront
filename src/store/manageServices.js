@@ -28,6 +28,20 @@ export default {
 						reject(err)
 					})
 			})
+		},
+		async DELETE_SERVICE({ commit }, service_form) {
+			const service_query = db.collection('SERVICES')
+															.where('branch_id', '==', service_form.branch_id)
+															.where('type_id', '==', service_form.type_id)
+															.where('subtype_id', '==', service_form.subtype_id)
+			const query_snap = await service_query.get()
+			query_snap.forEach(function(doc) {
+				doc.ref.delete()
+			})
+
+			commit('DELETE_SERVICE', service_form)
+
+			console.log('Successfully deleted')
 		}
 	},
 	mutations: {
