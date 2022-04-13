@@ -33,9 +33,10 @@ const routes = [
     component: () => import('../views/About.vue')
   },
   {
-    path: '/service_information',
-    name: 'ServiceInformation',
+    path: '/service_add',
+    name: 'AddService',
     meta: {layout: 'main', requiresAuth: true},
+    props: true,
     component: () => import('../views/AddService.vue')
   },
   {
@@ -66,9 +67,9 @@ const routes = [
     meta: {layout: 'main', requiresAuth: true},
     component: () => import('../views/PsClub/PsClub.vue'),
     children: [
-      {path: 'daily', meta: {layout: 'main', requiresAuth: true} , component: () => import('@/views/PsClub/Daily.vue')},
+      {path: 'hourly', meta: {layout: 'main', requiresAuth: true} , component: () => import('@/views/PsClub/Hourly.vue')},
       {path: 'packet', meta: {layout: 'main', requiresAuth: true} , component: () => import('@/views/PsClub/Packet.vue')},
-      {path: 'private', meta: {layout: 'main', requiresAuth: true} , component: () => import('@/views/PsClub/Private.vue')},
+      {path: 'packet_calyan', meta: {layout: 'main', requiresAuth: true} , component: () => import('@/views/PsClub/PacketWithCalyan.vue')},
     ]
   },
 ]

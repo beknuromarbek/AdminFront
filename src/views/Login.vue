@@ -52,7 +52,7 @@ export default {
         await this.LOGIN(this.form)
         await this.$router.replace('home')
       } catch(err) {
-        console.error(err)
+        this.error = err
       }
     },
   },

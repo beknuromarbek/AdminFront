@@ -3,7 +3,8 @@ import Vuex from 'vuex'
 import firebase from 'firebase/compat/app'
 import { db } from '@/main'
 
-import auth from '@/store/auth.js'
+import manageServices from "@/store/manageServices";
+import auth from '@/store/auth'
 
 Vue.use(Vuex)
 
@@ -19,6 +20,7 @@ const getDefaultState = () => {
 export default new Vuex.Store({
 	modules: {
 		auth,
+		manageServices
 	},
 	state: {
 		services: []
@@ -54,9 +56,12 @@ export default new Vuex.Store({
 				state.services.push(service.data())
 			}
 		},
+		PUSH_SERVICE(state, service) {
+			state.services.push(service)
+		},
 		RESET_STATE(state) {
 			Object.assign(state, getDefaultState())
-		}
+		},
 	},
 	getters: {
 		GET_SERVICES(state) {

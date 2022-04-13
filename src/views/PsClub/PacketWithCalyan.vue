@@ -9,7 +9,7 @@
   </div>
   <p v-else>You doesn't have subtype!
     <br> If you want add click ->
-    <router-link :to="{ name: 'AddService', params: { type_with_subtype: { type: 2, subtype: 2 }}}">Me
+    <router-link :to="{ name: 'AddService', params: { type_with_subtype: { type: 1, subtype: 2 }}}">Me
     </router-link>
   </p>
 </div>
@@ -19,10 +19,10 @@
 import {subtype_mixin} from "@/mixins/SubtypeLogic";
 
 export default {
-  name: "Night",
+  name: "PacketWithCalyan",
   mixins: [subtype_mixin],
   mounted() {
-    this.have_this_service_or_not(2, 2)
+    this.have_this_service_or_not(1, 2)
     console.log(this.$route.path)
   }
 }

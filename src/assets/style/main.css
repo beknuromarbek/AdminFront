@@ -57,6 +57,8 @@ body {
     margin: 0 auto;
     padding: 0 15px;
     max-width: 1240px;
+    display: flex;
+    justify-content: center;
 }
 
 .main-links {
@@ -88,6 +90,7 @@ body {
 .block-content {
   display: flex;
   justify-content: center;
+  max-width: 600px;
 }
 /* End Main page styles */
 
@@ -119,6 +122,17 @@ body {
     padding: 15px;
     box-sizing: border-box;
     font-size: 14px;
+}
+.form textarea {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
 }
 .form button {
     font-family: "Roboto", sans-serif;
