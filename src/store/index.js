@@ -59,6 +59,16 @@ export default new Vuex.Store({
 		PUSH_SERVICE(state, service) {
 			state.services.push(service)
 		},
+		UPDATE_SERVICE(state, service) {
+			for (let i = 0; i < state.services.length; i++) {
+				let type_id = state.services[i].type_id
+				let subtype_id = state.services[i].subtype_id
+				if (service.type_id === type_id && service.subtype_id === subtype_id) {
+					state.services[i] = service
+					break
+				}
+			}
+		},
 		DELETE_SERVICE(state, service) {
 			for (let i = 0; i < state.services.length; i++) {
 				let type_id = state.services[i].type_id

@@ -22,7 +22,7 @@
           <td>{{ service.additional_information }}</td>
           <td>{{ get_type_name(service) }}</td>
           <td>{{ get_subtype_name(service) }}</td>
-          <td><button>Edit</button></td>
+          <td><button @click="edit_service(service)">Edit</button></td>
           <td><button @click="delete_service(service)">Delete</button></td>
         </tr>
       </table>
@@ -36,6 +36,7 @@ import firebase from 'firebase/compat';
 import { mapActions, mapGetters } from 'vuex'
 
 import Spinner from '@/components/Spinner'
+import {db} from "@/main";
 
 export default {
   name: 'Home',
@@ -73,6 +74,9 @@ export default {
       if (choice) {
         this.DELETE_SERVICE(service_form)
       }
+    },
+    edit_service(service_form) {
+      this.$router.push({ name: 'EditService', params: {'service_form': service_form}})
     }
   },
   async mounted() {

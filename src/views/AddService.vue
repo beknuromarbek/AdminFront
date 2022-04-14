@@ -100,14 +100,14 @@ export default {
         return
       }
 
-      if (this.GET_SERVICES.length === 0) {
-        try {
-          const user = firebase.auth().currentUser
-          await this.GET_FIRESTORE_INFORMATION_OF_AUTH_USER(user)
-        } catch (err) {
-          console.error(err)
-        }
-      }
+      // if (this.GET_SERVICES.length === 0) {
+      //   try {
+      //     const user = firebase.auth().currentUser
+      //     await this.GET_FIRESTORE_INFORMATION_OF_AUTH_USER(user)
+      //   } catch (err) {
+      //     console.error(err)
+      //   }
+      // }
 
       this.filling_form_type_and_subtype()
 

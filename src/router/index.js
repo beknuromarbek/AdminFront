@@ -40,6 +40,13 @@ const routes = [
     component: () => import('../views/AddService.vue')
   },
   {
+    path: '/service_edit',
+    name: 'EditService',
+    meta: {layout: 'main', requiresAuth: true},
+    props: true,
+    component: () => import('../views/UpdateService.vue')
+  },
+  {
     path: '/anticafe',
     name: 'AntiCafe',
     meta: {layout: 'main', requiresAuth: true},
