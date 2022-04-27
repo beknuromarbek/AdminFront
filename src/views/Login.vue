@@ -25,15 +25,19 @@
 </template>
 
 <script>
-import firebase from 'firebase/compat';
 import { mapActions, mapGetters } from 'vuex'
+import firebase from "firebase/compat";
 
 import Spinner from '@/components/Spinner'
-import { db } from '@/main.js';
 
 export default {
   name: "Login",
   components: { Spinner },
+  computed: {
+    ...mapGetters([
+        'GET_USER'
+    ])
+  },
   data() {
     return {
       form: {
@@ -49,8 +53,11 @@ export default {
     ]),
     async submit() {
       try {
+        console.log('login in')
         await this.LOGIN(this.form)
-        await this.$router.replace('home')
+        if (firebase.auth().currentUser != undefined) {
+          await this.$router.push({name: 'Home'})
+        }
       } catch(err) {
         this.error = err
       }

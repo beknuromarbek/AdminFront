@@ -30,11 +30,11 @@ export default new Vuex.Store({
 			return new Promise((resolve, reject) => {
 				const user = rootState.auth.userInfo
 				if (state.services.length === 0) {
+					console.log(state.services.length)
 					db.collection('SERVICES')
-						.where('branch_id', '==', user.branch_id)
+						.where('branchId', '==', user.branch_id)
 						.get()
 						.then(r => {
-							console.log(r.docs)
 							commit('SET_SERVICES', r.docs)
 							resolve('Services from firestore fetched successfully');
 						})
@@ -53,6 +53,7 @@ export default new Vuex.Store({
 	mutations: {
 		SET_SERVICES(state, services) {
 			for (let service of services) {
+				console.log(service.data())
 				state.services.push(service.data())
 			}
 		},

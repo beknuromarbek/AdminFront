@@ -8,6 +8,7 @@ export default {
 	},
 	actions: {
 		async LOGIN({ dispatch }, form) {
+			console.log('ssss')
 			return new Promise((resolve, reject) => {
 				firebase.auth()
 					.signInWithEmailAndPassword(form.email, form.password)
@@ -23,7 +24,7 @@ export default {
 		},
 		GET_FIRESTORE_INFORMATION_OF_AUTH_USER({ commit, state }, user) {
 			return new Promise((resolve, reject) => {
-				db.collection("users")
+				db.collection("ADMINS")
 					.onSnapshot((querySnapshot) => {
 						querySnapshot.forEach((doc) => {
 							if (doc.id !== user.uid) {

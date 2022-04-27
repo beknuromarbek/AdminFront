@@ -2,7 +2,7 @@
   <div class="wrapper">
     <Header/>
     <div class="main-container">
-      <router-view/>
+      <router-view :key="$route.fullPath"/>
     </div>
   </div>
 
@@ -15,6 +15,9 @@ export default {
   name: "MainLayout",
   components: {
     Header
+  },
+  mounted() {
+    console.log('from main layout')
   }
 }
 </script>

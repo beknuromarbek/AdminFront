@@ -14,7 +14,8 @@ export const subtype_mixin = {
 	},
 	methods: {
 		have_this_service_or_not(type_id, subtype_id) {
-			const get_service_from_store = this.GET_SERVICES.filter(el => el.subtype_id === subtype_id && el.type_id === type_id)
+			const get_service_from_store = this.GET_SERVICES.filter(el => el.subtypeId === subtype_id && el.typeId === type_id)
+
 			if (get_service_from_store.length) {
 				this.have_service = true
 				this.service = get_service_from_store[0]

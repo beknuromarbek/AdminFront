@@ -19,13 +19,15 @@
         >
           <td>{{ service.name }}</td>
           <td>{{ service.price }}</td>
-          <td>{{ service.additional_information }}</td>
+          <td v-if="service.addInformation">{{ service.addInformation }}</td>
+          <td v-else>Nothing in</td>
           <td>{{ get_type_name(service) }}</td>
           <td>{{ get_subtype_name(service) }}</td>
           <td><button @click="edit_service(service)">Edit</button></td>
           <td><button @click="delete_service(service)">Delete</button></td>
         </tr>
       </table>
+
     </div>
     <Spinner v-else />
   </div>
@@ -36,7 +38,6 @@ import firebase from 'firebase/compat';
 import { mapActions, mapGetters } from 'vuex'
 
 import Spinner from '@/components/Spinner'
-import {db} from "@/main";
 
 export default {
   name: 'Home',
@@ -64,10 +65,10 @@ export default {
         'DELETE_SERVICE',
     ]),
     get_type_name(service) {
-      return this.type_of_service[service.type_id]
+      return this.type_of_service[service.typeId]
     },
     get_subtype_name(service) {
-      return this.subtype_of_service[service.type_id][service.subtype_id]
+      return this.subtype_of_service[service.typeId][service.subTypeId]
     },
     delete_service(service_form) {
       let choice = confirm('Are you wanna delete')
@@ -77,17 +78,18 @@ export default {
     },
     edit_service(service_form) {
       this.$router.push({ name: 'EditService', params: {'service_form': service_form}})
-    }
+    },
   },
   async mounted() {
     try {
       const user = await firebase.auth().currentUser
       await this.GET_FIRESTORE_INFORMATION_OF_AUTH_USER(user)
       await this.GET_SERVICES_FROM_FIRESTORE()
+      console.log(this.GET_SERVICES)
     } catch (err) {
       console.error(err)
     }
-  }
+  },
 }
 </script>
 

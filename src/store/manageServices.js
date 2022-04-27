@@ -11,13 +11,13 @@ export default {
 				console.log(service_form)
 				const id = db.collection('SERVICES').doc().id
 				db.collection('SERVICES').doc(id).set({
-					branch_id: service_form.branch_id,
-					type_id: service_form.type_id,
-					subtype_id: service_form.subtype_id,
+					branchId: service_form.branch_id,
+					typeId: service_form.type_id,
+					subtypeId: service_form.subtype_id,
 					name: service_form.name,
 					image: null,
 					price: service_form.price,
-					additional_information: service_form.additional_information
+					addInformation: service_form.additional_information
 				})
 					.then(function() {
 						console.log('Success bolgannan kein')
@@ -31,9 +31,9 @@ export default {
 		},
 		async DELETE_SERVICE({ commit }, service_form) {
 			const service_query = db.collection('SERVICES')
-															.where('branch_id', '==', service_form.branch_id)
-															.where('type_id', '==', service_form.type_id)
-															.where('subtype_id', '==', service_form.subtype_id)
+															.where('branchId', '==', service_form.branch_id)
+															.where('typeId', '==', service_form.type_id)
+															.where('subtypeId', '==', service_form.subtype_id)
 			const query_snap = await service_query.get()
 			query_snap.forEach(function(doc) {
 				doc.ref.delete()
@@ -51,7 +51,7 @@ export default {
 							name: service_form.name,
 							image: null,
 							price: service_form.price,
-							additional_information: service_form.additional_information
+							addInformation: service_form.additional_information
 						})
 					})
 					.then(r => {
@@ -65,11 +65,12 @@ export default {
 		},
 		async GET_SERVICE_ID_FROM_DOCUMENT({commit}, service_form) {
 			const ref = db.collection('SERVICES')
-										.where('branch_id', '==', service_form.branch_id)
-										.where('type_id', '==', service_form.type_id)
-										.where('subtype_id', '==', service_form.subtype_id)
+										.where('branchId', '==', service_form.branch_id)
+										.where('typeId', '==', service_form.type_id)
+										.where('subtypeId', '==', service_form.subtype_id)
 
 			let id;
+
 			try {
 				await ref.get().then((serviceList) => {
 					serviceList.forEach(function(ser) {
@@ -84,6 +85,5 @@ export default {
 		}
 	},
 	mutations: {
-
 	}
 }

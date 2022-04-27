@@ -30,7 +30,7 @@ export default {
           .signOut()
           .then(() => {
             this.RESET_VUEX_DATA()
-            this.$router.replace('login')
+            this.$router.push({name: 'Login'})
           })
     }
   }
