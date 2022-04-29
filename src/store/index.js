@@ -32,7 +32,7 @@ export default new Vuex.Store({
 				if (state.services.length === 0) {
 					console.log(state.services.length)
 					db.collection('SERVICES')
-						.where('branchId', '==', user.branch_id)
+						.where('branchId', '==', user.branchId)
 						.get()
 						.then(r => {
 							commit('SET_SERVICES', r.docs)
@@ -62,9 +62,9 @@ export default new Vuex.Store({
 		},
 		UPDATE_SERVICE(state, service) {
 			for (let i = 0; i < state.services.length; i++) {
-				let type_id = state.services[i].type_id
-				let subtype_id = state.services[i].subtype_id
-				if (service.type_id === type_id && service.subtype_id === subtype_id) {
+				let typeId = state.services[i].typeId
+				let subTypeId = state.services[i].subTypeId
+				if (service.typeId === typeId && service.subTypeId === subTypeId) {
 					state.services[i] = service
 					break
 				}
@@ -72,9 +72,9 @@ export default new Vuex.Store({
 		},
 		DELETE_SERVICE(state, service) {
 			for (let i = 0; i < state.services.length; i++) {
-				let type_id = state.services[i].type_id
-				let subtype_id = state.services[i].subtype_id
-				if (service.type_id === type_id && service.subtype_id === subtype_id) {
+				let typeId = state.services[i].typeId
+				let subTypeId = state.services[i].subTypeId
+				if (service.typeId === typeId && service.subTypeId === subTypeId) {
 					state.services.splice(i, 1)
 				}
 			}
@@ -88,5 +88,4 @@ export default new Vuex.Store({
 			return state.services
 		}
 	}
-
 })

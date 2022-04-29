@@ -37,14 +37,28 @@ const routes = [
     name: 'AddService',
     meta: {layout: 'main', requiresAuth: true},
     props: true,
-    component: () => import('../views/AddService.vue')
+    component: () => import('../views/Service/AddService.vue')
   },
   {
     path: '/service_edit',
     name: 'EditService',
     meta: {layout: 'main', requiresAuth: true},
     props: true,
-    component: () => import('../views/UpdateService.vue')
+    component: () => import('../views/Service/UpdateService.vue')
+  },
+  {
+    path: '/room/:id',
+    name: 'DetailRoom',
+    meta: {layout: 'main', requiresAuth: true},
+    props: true,
+    component: () => import('../views/Room/DetailRoom')
+  },
+  {
+    path: '/room_add',
+    name: 'AddRoom',
+    meta: {layout: 'main', requiresAuth: true},
+    props: true,
+    component: () => import('../views/Room/AddRoom.vue')
   },
   {
     path: '/anticafe',

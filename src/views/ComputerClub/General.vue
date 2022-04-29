@@ -1,30 +1,45 @@
 <template>
-<div>
-  <div v-if="have_service">
-    <p>{{ service.name }}</p>
-    <p>Price: <span><strong>{{ service.price }}</strong></span></p>
+<div style="text-align: center;">
+  <h2>Services</h2>
 
-    <p v-if="service.additional_information">{{ service.additional_information }}</p>
 
-  </div>
+  <router-link
+      tag="button"
+      v-if="have_service"
+      class="button-17 bottom-button"
+      :to="{name: 'AddService', params: {type_with_subtype: {type: 0, subtype: 0}}}"
+  >
+    Add Service</router-link>
 
-  <p v-else>You doesn't have subtype!
-    <br> If you want add click ->
-    <router-link :to="{ name: 'AddService', params: { type_with_subtype: { type: 0, subtype: 0 }}}">Me
-    </router-link>
-  </p>
 </div>
 </template>
 
 <script>
 import {subtype_mixin} from "@/mixins/SubtypeLogic";
 
+import { mapGetters } from 'vuex'
+import firebase from 'firebase/compat'
+
 export default {
   name: "General",
   mixins: [subtype_mixin],
+  data() {
+    return {
+      rooms: null
+    }
+  },
+  computed: {
+    ...mapGetters([
+        'GET_SERVICES',
+        'GET_USER'
+    ])
+  },
   mounted() {
     this.have_this_service_or_not(0, 0)
-    console.log(this.$route.path)
+    firebase.database().ref(`${this.GET_USER.branchId}-0-0`).on('value', snap => {
+      console.log(snap.val())
+      this.rooms = snap.val()
+    })
   }
 }
 </script>

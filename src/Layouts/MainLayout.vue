@@ -16,9 +16,6 @@ export default {
   components: {
     Header
   },
-  mounted() {
-    console.log('from main layout')
-  }
 }
 </script>
 

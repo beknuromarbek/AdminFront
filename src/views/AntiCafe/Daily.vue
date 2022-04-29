@@ -4,7 +4,7 @@
     <p>{{ service.name }}</p>
     <p>Price: <span><strong>{{ service.price }}</strong></span></p>
 
-    <p v-if="service.additional_information">{{ service.additional_information }}</p>
+    <p v-if="service.addInformation">{{ service.addInformation }}</p>
 
   </div>
   <p v-else>You doesn't have subtype!

@@ -35,7 +35,7 @@
         <textarea
             placeholder="Additional Information"
             name="additional_information"
-            v-model="service_form.additional_information"
+            v-model="service_form.addInformation"
         />
         <button type="submit">Save</button>
       </form>
@@ -83,22 +83,13 @@ export default {
         return
       }
 
-      // if (this.GET_SERVICES.length === 0) {
-      //   try {
-      //     const user = firebase.auth().currentUser
-      //     await this.GET_FIRESTORE_INFORMATION_OF_AUTH_USER(user)
-      //   } catch (err) {
-      //     console.error(err)
-      //   }
-      // }
-
       this.filling_form_type_and_subtype()
 
       console.log('are you her ')
     },
     filling_form_type_and_subtype() {
-      this.type_name = this.type_of_service[this.service_form.type_id]
-      this.subtype_name = this.subtype_of_service[this.service_form.type_id][this.service_form.subtype_id]
+      this.type_name = this.type_of_service[this.service_form.typeId]
+      this.subtype_name = this.subtype_of_service[this.service_form.typeId][this.service_form.subTypeId]
     }
   },
   mounted() {

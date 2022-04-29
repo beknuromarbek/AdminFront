@@ -53,13 +53,13 @@ export default {
     ]),
     async submit() {
       try {
-        console.log('login in')
         await this.LOGIN(this.form)
         if (firebase.auth().currentUser != undefined) {
           await this.$router.push({name: 'Home'})
+          this.error = ''
         }
       } catch(err) {
-        this.error = err
+        this.error = 'Incorrect password or email. Try again'
       }
     },
   },

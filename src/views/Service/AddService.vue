@@ -32,10 +32,17 @@
           v-model="form.price"
           required
       />
+      <input
+          type="number"
+          placeholder="Number of Places"
+          name="number"
+          v-model="numberOfPlaces"
+          required
+      />
       <textarea
           placeholder="Additional Information"
           name="additional_information"
-          v-model="form.additional_information"
+          v-model="form.addInformation"
       />
       <button type="submit">Save</button>
     </form>
@@ -48,7 +55,6 @@
 import {mapActions, mapGetters} from 'vuex'
 
 import Spinner from '@/components/Spinner'
-import firebase from "firebase/compat";
 
 export default {
   name: "AddService",
@@ -61,14 +67,15 @@ export default {
       type_name: null,
       subtype_name: null,
       form: {
-        branch_id: null,
-        type_id: null,
-        subtype_id: null,
+        branchId: null,
+        typeId: null,
+        subTypeId: null,
         name: '',
-        price: 0,
-        additional_information: '',
+        price: null,
+        addInformation: '',
       },
-      error: null
+      error: null,
+      numberOfPlaces: null
     }
   },
   computed: {
@@ -84,7 +91,9 @@ export default {
         'ADD_SERVICE'
     ]),
     save_service() {
-      this.ADD_SERVICE(this.form)
+      console.log(this.form)
+      console.log(this.numberOfPlaces)
+      this.ADD_SERVICE(this.form, this.numberOfPlaces)
           .then(r => {
             console.log(r)
             this.$router.back()
@@ -100,26 +109,17 @@ export default {
         return
       }
 
-      // if (this.GET_SERVICES.length === 0) {
-      //   try {
-      //     const user = firebase.auth().currentUser
-      //     await this.GET_FIRESTORE_INFORMATION_OF_AUTH_USER(user)
-      //   } catch (err) {
-      //     console.error(err)
-      //   }
-      // }
-
       this.filling_form_type_and_subtype()
 
       console.log('are you her ')
     },
     filling_form_type_and_subtype() {
-      this.form.branch_id = this.GET_USER.branch_id
-      this.form.subtype_id = this.type_with_subtype.subtype
-      this.form.type_id = this.type_with_subtype.type
+      this.form.branchId = this.GET_USER.branchId
+      this.form.subTypeId = this.type_with_subtype.subtype
+      this.form.typeId = this.type_with_subtype.type
 
-      this.type_name = this.type_of_service[this.form.type_id]
-      this.subtype_name = this.subtype_of_service[this.form.type_id][this.form.subtype_id]
+      this.type_name = this.type_of_service[this.form.typeId]
+      this.subtype_name = this.subtype_of_service[this.form.typeId][this.form.subTypeId]
 
     }
   },

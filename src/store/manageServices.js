@@ -6,18 +6,18 @@ import {db} from "@/main";
 export default {
 	state: {},
 	actions: {
-		ADD_SERVICE({ commit }, service_form) {
+		ADD_SERVICE({ commit, dispatch }, service_form, numberOfPlaces) {
 			return new Promise((resolve, reject) => {
 				console.log(service_form)
 				const id = db.collection('SERVICES').doc().id
 				db.collection('SERVICES').doc(id).set({
-					branchId: service_form.branch_id,
-					typeId: service_form.type_id,
-					subtypeId: service_form.subtype_id,
+					branchId: service_form.branchId,
+					typeId: service_form.typeId,
+					subTypeId: service_form.subTypeId,
 					name: service_form.name,
 					image: null,
 					price: service_form.price,
-					addInformation: service_form.additional_information
+					addInformation: service_form.addInformation
 				})
 					.then(function() {
 						console.log('Success bolgannan kein')
@@ -29,11 +29,14 @@ export default {
 					})
 			})
 		},
+		ADD_REALTIME_PLACES({commit}) {
+			console.log('here')
+		},
 		async DELETE_SERVICE({ commit }, service_form) {
 			const service_query = db.collection('SERVICES')
-															.where('branchId', '==', service_form.branch_id)
-															.where('typeId', '==', service_form.type_id)
-															.where('subtypeId', '==', service_form.subtype_id)
+															.where('branchId', '==', service_form.branchId)
+															.where('typeId', '==', service_form.typeId)
+															.where('subTypeId', '==', service_form.subTypeId)
 			const query_snap = await service_query.get()
 			query_snap.forEach(function(doc) {
 				doc.ref.delete()
@@ -43,7 +46,8 @@ export default {
 
 			console.log('Successfully deleted')
 		},
-		UPDATE_SERVICE({ commit, rootState, dispatch }, service_form) { console.log(service_form)
+		UPDATE_SERVICE({ commit, rootState, dispatch }, service_form) {
+			console.log(service_form)
 			return new Promise((resolve, reject) => {
 				dispatch('GET_SERVICE_ID_FROM_DOCUMENT', service_form)
 					.then(id => {
@@ -51,7 +55,7 @@ export default {
 							name: service_form.name,
 							image: null,
 							price: service_form.price,
-							addInformation: service_form.additional_information
+							addInformation: service_form.addInformation
 						})
 					})
 					.then(r => {
@@ -65,9 +69,9 @@ export default {
 		},
 		async GET_SERVICE_ID_FROM_DOCUMENT({commit}, service_form) {
 			const ref = db.collection('SERVICES')
-										.where('branchId', '==', service_form.branch_id)
-										.where('typeId', '==', service_form.type_id)
-										.where('subtypeId', '==', service_form.subtype_id)
+										.where('branchId', '==', service_form.branchId)
+										.where('typeId', '==', service_form.typeId)
+										.where('subTypeId', '==', service_form.subTypeId)
 
 			let id;
 
