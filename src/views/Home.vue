@@ -15,11 +15,11 @@
           <th>Delete</th>
         </tr>
         <tr
-            v-for="service of GET_SERVICES"
+            v-for="service of services_with_no_duplicates"
         >
           <td>{{ service.name }}</td>
           <td>{{ service.price }}</td>
-          <td v-if="service.addInformation">{{ service.addInformation }}</td>
+          <td v-if="service.addInformation">{{ service.addInformation | truncate(30) }}</td>
           <td v-else>Nothing in</td>
           <td>{{ get_type_name(service) }}</td>
           <td>{{ get_subtype_name(service) }}</td>
@@ -35,7 +35,7 @@
 
 <script>
 import firebase from 'firebase/compat';
-import { mapActions, mapGetters } from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 import Spinner from '@/components/Spinner'
 
@@ -57,6 +57,14 @@ export default {
         'GET_USER',
         'GET_SERVICES'
     ]),
+    services_with_no_duplicates() {
+      return [...new Set(this.GET_SERVICES)]
+    }
+  },
+  filters: {
+    truncate: function(data, num) {
+      return data.split("").slice(0, num).join("")
+    }
   },
   methods: {
     ...mapActions([
@@ -85,7 +93,6 @@ export default {
       const user = await firebase.auth().currentUser
       await this.GET_FIRESTORE_INFORMATION_OF_AUTH_USER(user)
       await this.GET_SERVICES_FROM_FIRESTORE()
-      console.log(this.GET_SERVICES)
     } catch (err) {
       console.error(err)
     }

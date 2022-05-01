@@ -47,18 +47,11 @@ const routes = [
     component: () => import('../views/Service/UpdateService.vue')
   },
   {
-    path: '/room/:id',
-    name: 'DetailRoom',
+    path: '/service_detail/:id',
+    name: 'DetailService',
     meta: {layout: 'main', requiresAuth: true},
     props: true,
-    component: () => import('../views/Room/DetailRoom')
-  },
-  {
-    path: '/room_add',
-    name: 'AddRoom',
-    meta: {layout: 'main', requiresAuth: true},
-    props: true,
-    component: () => import('../views/Room/AddRoom.vue')
+    component: () => import('../views/Service/DetailService.vue')
   },
   {
     path: '/anticafe',

@@ -26,6 +26,12 @@
           required
       />
       <input
+          type="text"
+          placeholder="Link to image"
+          name="ImageLink"
+          v-model="form.image"
+      >
+      <input
           type="number"
           placeholder="Price"
           name="price"
@@ -71,6 +77,7 @@ export default {
         typeId: null,
         subTypeId: null,
         name: '',
+        image: '',
         price: null,
         addInformation: '',
       },
@@ -91,11 +98,8 @@ export default {
         'ADD_SERVICE'
     ]),
     save_service() {
-      console.log(this.form)
-      console.log(this.numberOfPlaces)
-      this.ADD_SERVICE(this.form, this.numberOfPlaces)
-          .then(r => {
-            console.log(r)
+      this.ADD_SERVICE({service_form: this.form, numberOfPlaces: this.numberOfPlaces})
+          .then(res => {
             this.$router.back()
           })
           .catch(err => {

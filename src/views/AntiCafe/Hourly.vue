@@ -1,29 +1,56 @@
 <template>
-  <div>
-    <div v-if="have_service">
-      <p>{{ service.name }}</p>
-      <p>Price: <span><strong>{{ service.price }}</strong></span></p>
+  <div style="text-align: center;">
+    <h2>Services</h2>
 
-      <p v-if="service.addInformation">{{ service.addInformation }}</p>
+    <ul>
+      <li
+          v-for="service of services_filtered_by_type_and_subtype"
+          :key="service.id"
+      >
 
-    </div>
-    <p v-else>You doesn't have subtype!
-      <br> If you want add click ->
-      <router-link :to="{ name: 'AddService', params: { type_with_subtype: { type: 2, subtype: 0 }}}">Me
-      </router-link>
-    </p>
+        <router-link
+            tag="a"
+            :to="{name: 'DetailService', params: {id: service.id}}"
+        >
+          {{ service.name }}
+        </router-link>
+
+      </li>
+    </ul>
+
+    <router-link
+        tag="button"
+        class="button-17 bottom-button"
+        :to="{name: 'AddService', params: {type_with_subtype: {type: 2, subtype: 0}}}"
+    >
+      Add Service</router-link>
+
   </div>
 </template>
 
 <script>
 import {subtype_mixin} from "@/mixins/SubtypeLogic";
 
+import { mapGetters } from 'vuex'
+import firebase from 'firebase/compat'
+
 export default {
-  name: "Hourly",
+  name: "HourlyAnticafe",
   mixins: [subtype_mixin],
+  data() {
+    return {
+      rooms: null
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'GET_SERVICES',
+      'GET_USER'
+    ])
+  },
   mounted() {
     this.have_this_service_or_not(2, 0)
-    console.log(this.$route.path)
   }
 }
 </script>
+

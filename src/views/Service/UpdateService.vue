@@ -5,7 +5,6 @@
         class="form"
     >
       <h1>Edit Service</h1>
-<!--      <span v-if="error">{{}}</span>-->
       <form class="login-form" @submit.prevent="save_service">
         <input
             type="text"
@@ -25,6 +24,12 @@
             v-model="service_form.name"
             required
         />
+        <input
+            type="text"
+            placeholder="Link to image"
+            name="ImageLink"
+            v-model="service_form.image"
+        >
         <input
             type="number"
             placeholder="Price"

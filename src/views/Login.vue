@@ -1,7 +1,9 @@
 <template>
   <div class="login-page">
-
     <div class="form">
+
+      <h1 style="margin-top: 0;">Login</h1>
+
       <form class="login-form" @submit.prevent="submit">
         <span v-if="error">{{ error }}</span>
         <input

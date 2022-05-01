@@ -6,21 +6,25 @@ import {db} from "@/main";
 export default {
 	state: {},
 	actions: {
-		ADD_SERVICE({ commit, dispatch }, service_form, numberOfPlaces) {
+		async ADD_SERVICE({ commit, dispatch }, {service_form, numberOfPlaces}) {
+			const room = await dispatch('CREATE_PLACES_OF_SERVICE', numberOfPlaces)
+
 			return new Promise((resolve, reject) => {
-				console.log(service_form)
 				const id = db.collection('SERVICES').doc().id
+
 				db.collection('SERVICES').doc(id).set({
 					branchId: service_form.branchId,
 					typeId: service_form.typeId,
 					subTypeId: service_form.subTypeId,
 					name: service_form.name,
-					image: null,
+					image: service_form.image,
 					price: service_form.price,
 					addInformation: service_form.addInformation
 				})
 					.then(function() {
-						console.log('Success bolgannan kein')
+						firebase.database().ref(id).set(room)
+						service_form['id'] = id
+						console.log(service_form)
 						commit('PUSH_SERVICE', service_form)
 						resolve('Success')
 					})
@@ -29,38 +33,45 @@ export default {
 					})
 			})
 		},
-		ADD_REALTIME_PLACES({commit}) {
-			console.log('here')
+		CREATE_PLACES_OF_SERVICE({commit}, numberOfPlaces) {
+			let room = []
+			console.log(numberOfPlaces)
+
+			for (let i = 0; i < numberOfPlaces; i++) {
+				let place = {
+					name: i.toString(),
+					available: true,
+					price: 0
+				}
+				room.push(place)
+			}
+			console.log(room)
+
+			return room
 		},
 		async DELETE_SERVICE({ commit }, service_form) {
-			const service_query = db.collection('SERVICES')
-															.where('branchId', '==', service_form.branchId)
-															.where('typeId', '==', service_form.typeId)
-															.where('subTypeId', '==', service_form.subTypeId)
-			const query_snap = await service_query.get()
-			query_snap.forEach(function(doc) {
-				doc.ref.delete()
-			})
+			console.log('sukkka')
+			try {
+				await db.collection('SERVICES').doc(service_form.id).delete()
+				await firebase.database().ref(service_form.id).remove()
 
-			commit('DELETE_SERVICE', service_form)
-
-			console.log('Successfully deleted')
+				commit('DELETE_SERVICE', service_form)
+				console.log('Successfully deleted')
+			} catch (err) {
+				console.error(err)
+			}
 		},
 		UPDATE_SERVICE({ commit, rootState, dispatch }, service_form) {
-			console.log(service_form)
 			return new Promise((resolve, reject) => {
-				dispatch('GET_SERVICE_ID_FROM_DOCUMENT', service_form)
-					.then(id => {
-						return db.collection('SERVICES').doc(id).update({
-							name: service_form.name,
-							image: null,
-							price: service_form.price,
-							addInformation: service_form.addInformation
-						})
-					})
-					.then(r => {
+				db.collection('SERVICES').doc(service_form.id).update({
+					name: service_form.name,
+					image: service_form.image,
+					price: service_form.price,
+					addInformation: service_form.addInformation,
+				})
+					.then(res => {
 						commit('UPDATE_SERVICE', service_form)
-						resolve(r)
+						resolve(res)
 					})
 					.catch(err => {
 						reject(err)

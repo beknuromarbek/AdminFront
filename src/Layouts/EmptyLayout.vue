@@ -1,6 +1,5 @@
 <template>
-<div>
-  <h1>Login</h1>
+<div class="login-layout">
   <router-view/>
 </div>
 </template>
@@ -12,5 +11,12 @@ export default {
 </script>
 
 <style scoped>
+
+.login-layout {
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #877aff;
+}
 
 </style>

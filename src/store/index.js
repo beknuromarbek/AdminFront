@@ -53,18 +53,18 @@ export default new Vuex.Store({
 	mutations: {
 		SET_SERVICES(state, services) {
 			for (let service of services) {
-				console.log(service.data())
-				state.services.push(service.data())
+				let data = service.data()
+				data['id'] = service.id
+				state.services.push(data)
 			}
 		},
 		PUSH_SERVICE(state, service) {
+			console.log(service)
 			state.services.push(service)
 		},
 		UPDATE_SERVICE(state, service) {
 			for (let i = 0; i < state.services.length; i++) {
-				let typeId = state.services[i].typeId
-				let subTypeId = state.services[i].subTypeId
-				if (service.typeId === typeId && service.subTypeId === subTypeId) {
+				if (service.id === state.services[i].id) {
 					state.services[i] = service
 					break
 				}
@@ -72,9 +72,7 @@ export default new Vuex.Store({
 		},
 		DELETE_SERVICE(state, service) {
 			for (let i = 0; i < state.services.length; i++) {
-				let typeId = state.services[i].typeId
-				let subTypeId = state.services[i].subTypeId
-				if (service.typeId === typeId && service.subTypeId === subTypeId) {
+				if (service.id === state.services[i].id) {
 					state.services.splice(i, 1)
 				}
 			}

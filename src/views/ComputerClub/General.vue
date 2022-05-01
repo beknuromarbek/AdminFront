@@ -2,10 +2,24 @@
 <div style="text-align: center;">
   <h2>Services</h2>
 
+  <ul>
+    <li
+        v-for="service of services_filtered_by_type_and_subtype"
+        :key="service.id"
+    >
+
+      <router-link
+          tag="a"
+          :to="{name: 'DetailService', params: {id: service.id}}"
+      >
+        {{ service.name }}
+      </router-link>
+
+    </li>
+  </ul>
 
   <router-link
       tag="button"
-      v-if="have_service"
       class="button-17 bottom-button"
       :to="{name: 'AddService', params: {type_with_subtype: {type: 0, subtype: 0}}}"
   >
@@ -21,7 +35,7 @@ import { mapGetters } from 'vuex'
 import firebase from 'firebase/compat'
 
 export default {
-  name: "General",
+  name: "GeneralCompClub",
   mixins: [subtype_mixin],
   data() {
     return {
@@ -36,10 +50,6 @@ export default {
   },
   mounted() {
     this.have_this_service_or_not(0, 0)
-    firebase.database().ref(`${this.GET_USER.branchId}-0-0`).on('value', snap => {
-      console.log(snap.val())
-      this.rooms = snap.val()
-    })
   }
 }
 </script>

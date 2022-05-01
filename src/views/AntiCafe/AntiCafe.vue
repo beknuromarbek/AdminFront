@@ -27,8 +27,8 @@ import {service_mixin} from "@/mixins/GetServiceOfUser";
 
 export default {
   name: "Anticafe",
-  components: { Spinner },
   mixins: [service_mixin],
+  components: { Spinner },
   computed: {
     is_root() {
       return this.$route.path === '/anticafe'
@@ -40,7 +40,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>
