@@ -1,33 +1,49 @@
 <template>
   <div>
     <h1>Here is service room</h1>
+
+    <i
+        style="font-size:24px"
+        class="fa plus-place"
+        @click="add_place"
+    >&#xf067;</i>
+
     <table id="table">
       <tr>
         <th>Name</th>
         <th>Available</th>
         <th>Current Price</th>
         <th>Change Place</th>
+        <th>Delete Place</th>
       </tr>
       <tr
           v-for="(place, id) of service_room"
+          v-if="place"
       >
-        <th>{{ place.name }}</th>
-        <th
+        <td>{{ place.name }}</td>
+        <td
             :class="place.available ? 'free' : 'not'"
             @click="change_availability(id)"
         >
           {{ place.available ? 'Available' : 'Not available' }}
-        </th>
-        <th>
+        </td>
+        <td>
           {{ place.price }}
-        </th>
-        <th>
+        </td>
+        <td>
           <i
               class='fas'
               style='font-size:24px; cursor: pointer;'
               @click="change_place(id)"
           >&#xf303;</i>
-        </th>
+        </td>
+        <td>
+          <i
+              class='fas'
+              style='font-size:22px; cursor: pointer'
+              @click="delete_place(id)"
+          >&#xf1f8;</i>
+        </td>
       </tr>
     </table>
 
@@ -41,7 +57,7 @@ import { mapGetters } from 'vuex'
 export default {
   name: "DetailService",
   computed: {
-    ...mapGetters(['GET_SERVICES'])
+    ...mapGetters(['GET_SERVICES']),
   },
   data() {
     return {
@@ -81,12 +97,33 @@ export default {
     change_place(place_id) {
       let name = prompt('Name your place')
 
-      if (name || name === '') {
+      if (!name || name === '') {
         alert('Empty name')
       } else {
         firebase.database().ref(this.$route.params.id)
             .child(place_id).child('name').set(name)
       }
+    },
+    delete_place(place_id) {
+      console.log('deleting')
+      firebase.database().ref(this.$route.params.id).child(place_id).remove()
+    },
+    add_place() {
+      let name = prompt('Name your place')
+
+      if (!name || name === '') {
+        alert('Empty name')
+      } else {
+        let place = {
+          name: name,
+          available: true,
+          price: 0
+        }
+
+        firebase.database().ref(this.$route.params.id).push(place)
+      }
+
+
     }
   },
   mounted() {
@@ -99,16 +136,26 @@ export default {
 
 .not {
   cursor: pointer;
-  background-color: #EF3B3A!important;
+  background-color: #f55e5e;
+  color: #FFFFFF;
 }
 
 .free {
   cursor: pointer;
-  background-color: #42b983!important;
+  background-color: #3fb781 !important;
+  color: #FFFFFF;
 }
 
 .button-17 {
   border-radius: 0;
+}
+
+.plus-place {
+  position: absolute;
+  bottom: 40px;
+  right: 40px;
+
+  cursor: pointer;
 }
 
 </style>
