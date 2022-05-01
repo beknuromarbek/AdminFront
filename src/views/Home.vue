@@ -23,8 +23,19 @@
           <td v-else>Nothing in</td>
           <td>{{ get_type_name(service) }}</td>
           <td>{{ get_subtype_name(service) }}</td>
-          <td><button @click="edit_service(service)">Edit</button></td>
-          <td><button @click="delete_service(service)">Delete</button></td>
+          <td>
+            <i
+                class='fas'
+                style='font-size:24px; cursor: pointer'
+                @click="edit_service(service)"
+            >&#xf303;</i>
+          <td>
+            <i
+                class='fas'
+                style='font-size:22px; cursor: pointer'
+                @click="delete_service(service)"
+            >&#xf1f8;</i>
+          </td>
         </tr>
       </table>
 
