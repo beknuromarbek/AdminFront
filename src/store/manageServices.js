@@ -18,7 +18,7 @@ export default {
 					subTypeId: service_form.subTypeId,
 					name: service_form.name,
 					image: service_form.image,
-					price: service_form.price,
+					price: parseInt(service_form.price),
 					addInformation: service_form.addInformation
 				})
 					.then(function() {
